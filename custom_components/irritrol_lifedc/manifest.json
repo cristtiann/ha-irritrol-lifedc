@@ -1,0 +1,13 @@
+{
+  "domain": "irritrol_lifedc",
+  "name": "Irritrol LifeDC",
+  "codeowners": ["@cristtiann"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/cristtiann/ha-Irritrol-LifeDC-BLE-Controller-Phase-2",
+  "issue_tracker": "https://github.com/cristtiann/ha-Irritrol-LifeDC-BLE-Controller-Phase-2/issues",
+  "iot_class": "local_push",
+  "integration_type": "hub",
+  "requirements": [],
+  "version": "0.1.0"
+}

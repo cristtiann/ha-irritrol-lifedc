@@ -1,0 +1,53 @@
+"""Binary sensor platform for Irritrol LifeDC."""
+from __future__ import annotations
+
+from dataclasses import dataclass
+from homeassistant.components.binary_sensor import BinarySensorEntity, BinarySensorDeviceClass
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.event import async_track_state_change_event
+
+from .const import CONF_ENTITY_PREFIX, DOMAIN
+from .entity import IrritrolEntity
+
+
+@dataclass(frozen=True)
+class BinarySensorDescription:
+    key: str
+    name: str
+    source_suffix: str
+    device_class: BinarySensorDeviceClass | None = None
+
+
+BINARY_SENSORS = [
+    BinarySensorDescription("lifedc_connected", "LifeDC connected", "lifedc_connected", BinarySensorDeviceClass.CONNECTIVITY),
+]
+
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback) -> None:
+    prefix = hass.data[DOMAIN][entry.entry_id][CONF_ENTITY_PREFIX]
+    async_add_entities([IrritrolBinarySensor(entry, prefix, description) for description in BINARY_SENSORS])
+
+
+class IrritrolBinarySensor(IrritrolEntity, BinarySensorEntity):
+    def __init__(self, entry: ConfigEntry, prefix: str, description: BinarySensorDescription) -> None:
+        super().__init__(entry, description.key, description.name)
+        self._source_entity_id = f"binary_sensor.{prefix}_{description.source_suffix}"
+        self._attr_device_class = description.device_class
+        self._attr_available = False
+        self._attr_is_on = False
+
+    async def async_added_to_hass(self) -> None:
+        @callback
+        def _state_changed(event):
+            self._update_from_state()
+            self.async_write_ha_state()
+
+        self.async_on_remove(async_track_state_change_event(self.hass, [self._source_entity_id], _state_changed))
+        self._update_from_state()
+
+    def _update_from_state(self) -> None:
+        state = self.hass.states.get(self._source_entity_id)
+        self._attr_available = state is not None and state.state not in ("unavailable", "unknown")
+        self._attr_is_on = state is not None and state.state == "on"

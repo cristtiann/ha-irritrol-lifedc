@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Irritrol LifeDC",
+        "description": "Connect this integration to your existing ESPHome LifeDC BLE bridge. Enter the ESPHome entity prefix, usually `irritrol_irrigation`.",
+        "data": {
+          "entity_prefix": "ESPHome entity prefix"
+        }
+      }
+    },
+    "error": {},
+    "abort": {
+      "already_configured": "This ESPHome entity prefix is already configured."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+# Start normal cycle 1-2-3-4
+service: irritrol_lifedc.start_cycle
+data:
+  direction: forward
+  repeat: 1
+
+---
+
+# Start reverse cycle 4-3-2-1
+service: irritrol_lifedc.start_cycle
+data:
+  direction: reverse
+  repeat: 1
+
+---
+
+# Run zone 2
+service: irritrol_lifedc.run_zone
+data:
+  zone: 2

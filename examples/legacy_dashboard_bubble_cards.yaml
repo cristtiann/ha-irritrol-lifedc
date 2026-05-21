@@ -1,0 +1,697 @@
+type: vertical-stack
+cards:
+  - type: markdown
+    title: Irrigation Controller
+    content: >
+      {% set status = states('sensor.irritrol_lifedc_status') %} {% set progress
+      = states('sensor.irritrol_lifedc_cycle_progress') | float(0) | round(0) |
+      int %} {% set remaining =
+      states('sensor.irritrol_lifedc_cycle_time_remaining') | int(0) %} {% set
+      min = remaining // 60 %} {% set sec = remaining % 60 %} {% set bars =
+      progress // 10 %} {% set connected =
+      is_state('binary_sensor.irritrol_lifedc_lifedc_connected', 'on') %}
+
+      {% if 'Running' in status %} <h2><font color="#22c55e">● {{ status
+      }}</font></h2> {% elif status == 'Paused' %} <h2><font color="#f59e0b">●
+      Paused</font></h2> {% elif not connected %} <h2><font color="#ef4444">●
+      LifeDC disconnected</font></h2> {% else %} <h2><font color="#94a3b8"><b>○
+      {{ status }}</b></font></h2> {% endif %}
+
+      <b>Progress</b><br> <font size="4"><font color="#22c55e">{{ "#" * bars
+      }}</font><font color="#334155">{{ "-" * (10 - bars) }}</font></font> <b>{{
+      progress }}%</b><br>
+
+      <b>Remaining</b> {{ min }}m {{ sec }}s<br> <hr> {% set z1 =
+      states('sensor.irritrol_lifedc_zone_1_progress') | float(0) | round(0) |
+      int %} {% set z2 = states('sensor.irritrol_lifedc_zone_2_progress') |
+      float(0) | round(0) | int %} {% set z3 =
+      states('sensor.irritrol_lifedc_zone_3_progress') | float(0) | round(0) |
+      int %} {% set z4 = states('sensor.irritrol_lifedc_zone_4_progress') |
+      float(0) | round(0) | int %}
+
+      {% if is_state('switch.irritrol_lifedc_irritrol_zone_1', 'on') %} <font
+      color="#22c55e" size="4">● <b>Zone 1 RUNNING {{ z1 }}%</b></font><br> {%
+      else %} <font color="#64748b">○ Zone 1 idle</font><br> {% endif %}
+
+      {% if is_state('switch.irritrol_lifedc_irritrol_zone_2', 'on') %} <font
+      color="#22c55e" size="4">● <b>Zone 2 RUNNING {{ z2 }}%</b></font><br> {%
+      else %} <font color="#64748b">○ Zone 2 idle</font><br> {% endif %}
+
+      {% if is_state('switch.irritrol_lifedc_irritrol_zone_3', 'on') %} <font
+      color="#22c55e" size="4">● <b>Zone 3 RUNNING {{ z3 }}%</b></font><br> {%
+      else %} <font color="#64748b">○ Zone 3 idle</font><br> {% endif %}
+
+      {% if is_state('switch.irritrol_lifedc_irritrol_zone_4', 'on') %} <font
+      color="#22c55e" size="4">● <b>Zone 4 RUNNING {{ z4 }}%</b></font><br> {%
+      else %} <font color="#64748b">○ Zone 4 idle</font><br> {% endif %}
+
+      <hr>
+
+      {% if connected %} <font color="#22c55e">● Connected</font> {% else %}
+      <font color="#ef4444">● Disconnected</font> {% endif %}
+
+      <br> {% set rssi = states('sensor.irritrol_lifedc_lifedc_rssi') | float(0)
+      %}
+
+      {% if rssi > -70 %} <font color="#22c55e">Signal: {{ rssi }} dBm
+      (Good)</font> {% elif rssi > -85 %} <font color="#f59e0b">Signal: {{ rssi
+      }} dBm (OK)</font> {% else %} <font color="#ef4444">Signal: {{ rssi }} dBm
+      (Weak)</font> {% endif %}
+  - type: custom:bubble-card
+    card_type: button
+    button_type: name
+    entity: sensor.irritrol_lifedc_lifedc_rssi
+    name: LifeDC RSSI history
+    icon: mdi:signal
+    show_state: true
+    tap_action:
+      action: more-info
+    styles: |
+      .bubble-button-card-container {
+        background: ${Number(hass.states['sensor.irritrol_lifedc_lifedc_rssi'].state) > -70
+          ? 'rgba(34, 197, 94, 0.25)'
+          : Number(hass.states['sensor.irritrol_lifedc_lifedc_rssi'].state) > -85
+            ? 'rgba(245, 158, 11, 0.25)'
+            : 'rgba(239, 68, 68, 0.25)'} !important;
+      }
+
+      .bubble-icon {
+        color: ${Number(hass.states['sensor.irritrol_lifedc_lifedc_rssi'].state) > -70
+          ? 'rgb(34, 197, 94)'
+          : Number(hass.states['sensor.irritrol_lifedc_lifedc_rssi'].state) > -85
+            ? 'rgb(245, 158, 11)'
+            : 'rgb(239, 68, 68)'} !important;
+      }
+
+
+
+##############################################################################
+
+
+type: custom:vertical-stack-in-card
+cards:
+  - type: markdown
+    content: |
+      ## Manual Control
+  - type: horizontal-stack
+    cards:
+      - type: custom:bubble-card
+        card_type: button
+        button_type: name
+        name: Start
+        icon: mdi:play
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_start_cycle_1_2_3_4
+        button_action:
+          tap_action:
+            action: perform-action
+            perform_action: button.press
+            target:
+              entity_id: button.irritrol_lifedc_start_cycle_1_2_3_4
+        sub_button:
+          main:
+            - entity: sensor.irritrol_lifedc_cycle_progress
+              show_state: true
+              show_icon: false
+              show_name: false
+              visibility:
+                - condition: numeric_state
+                  entity: sensor.irritrol_lifedc_cycle_progress
+                  above: 0
+                  below: 100
+          bottom: []
+        styles: |
+          .bubble-button-card-container {
+            background: ${Number(hass.states['sensor.irritrol_lifedc_cycle_progress'].state) > 0 &&
+              Number(hass.states['sensor.irritrol_lifedc_cycle_progress'].state) < 100
+              ? 'rgba(255, 193, 7, 0.35)'
+              : ''} !important;
+            border: ${Number(hass.states['sensor.irritrol_lifedc_cycle_progress'].state) > 0 &&
+              Number(hass.states['sensor.irritrol_lifedc_cycle_progress'].state) < 100
+              ? '1px solid rgba(255, 193, 7, 0.9)'
+              : 'none'} !important;
+          }
+          .bubble-icon {
+            color: ${Number(hass.states['sensor.irritrol_lifedc_cycle_progress'].state) > 0 &&
+              Number(hass.states['sensor.irritrol_lifedc_cycle_progress'].state) < 100
+              ? 'rgb(255, 193, 7)'
+              : ''} !important;
+          }
+      - type: custom:bubble-card
+        card_type: button
+        button_type: name
+        name: Stop
+        icon: mdi:stop
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_stop
+        button_action:
+          tap_action:
+            action: perform-action
+            perform_action: button.press
+            target:
+              entity_id: button.irritrol_lifedc_stop
+        styles: |
+          .bubble-button-card-container {
+            background: ${hass.states['input_boolean.irritrol_stop_flash']?.state === 'on'
+              ? 'rgba(244, 67, 54, 0.45)'
+              : ''} !important;
+            border: ${hass.states['input_boolean.irritrol_stop_flash']?.state === 'on'
+              ? '1px solid rgba(244, 67, 54, 0.9)'
+              : 'none'} !important;
+          }
+          .bubble-icon {
+            color: ${hass.states['input_boolean.irritrol_stop_flash']?.state === 'on'
+              ? 'rgb(244, 67, 54)'
+              : ''} !important;
+          }
+  - type: grid
+    columns: 3
+    square: false
+    cards:
+      - type: custom:bubble-card
+        card_type: button
+        button_type: name
+        name: Next
+        icon: mdi:skip-next
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_next_zone
+        button_action:
+          tap_action:
+            action: perform-action
+            perform_action: button.press
+            target:
+              entity_id: button.irritrol_lifedc_next_zone
+      - type: custom:bubble-card
+        card_type: button
+        button_type: name
+        name: Reverse
+        icon: mdi:skip-previous
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_start_cycle_4_3_2_1
+        button_action:
+          tap_action:
+            action: perform-action
+            perform_action: button.press
+            target:
+              entity_id: button.irritrol_lifedc_start_cycle_4_3_2_1
+      - type: custom:bubble-card
+        card_type: button
+        button_type: name
+        name: Repeat x2
+        icon: mdi:repeat
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_repeat_cycle_2_times
+        button_action:
+          tap_action:
+            action: perform-action
+            perform_action: button.press
+            target:
+              entity_id: button.irritrol_lifedc_repeat_cycle_2_times
+  - type: markdown
+    content: |
+      <hr>
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: number.irritrol_lifedc_zone_1_minutes
+    name: Zone 1
+    icon: mdi:sprinkler-variant
+    show_state: false
+    styles: |
+      .bubble-button-card-container {
+        background: ${hass.states['switch.irritrol_lifedc_zone_1'].state === 'on' ? 'rgba(255, 193, 7, 0.35)' : ''} !important;
+        border: ${hass.states['switch.irritrol_lifedc_zone_1'].state === 'on' ? '1px solid rgba(255, 193, 7, 0.9)' : 'none'} !important;
+      }
+      .bubble-icon {
+        color: ${hass.states['switch.irritrol_lifedc_zone_1'].state === 'on' ? 'rgb(255, 193, 7)' : ''} !important;
+      }
+    tap_action:
+      action: call-service
+      service: button.press
+      target:
+        entity_id: button.irritrol_lifedc_run_zone_1
+    sub_button:
+      - entity: sensor.irritrol_lifedc_zone_1_progress
+        show_state: true
+        show_icon: false
+        show_name: false
+        visibility:
+          - condition: state
+            entity: switch.irritrol_lifedc_zone_1
+            state: "on"
+      - icon: mdi:play
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_run_zone_1
+      - icon: mdi:stop
+        tap_action:
+          action: call-service
+          service: switch.turn_off
+          target:
+            entity_id: switch.irritrol_lifedc_zone_1
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: number.irritrol_lifedc_zone_2_minutes
+    name: Zone 2
+    icon: mdi:sprinkler-variant
+    show_state: false
+    styles: |
+      .bubble-button-card-container {
+        background: ${hass.states['switch.irritrol_lifedc_zone_2'].state === 'on' ? 'rgba(255, 193, 7, 0.35)' : ''} !important;
+        border: ${hass.states['switch.irritrol_lifedc_zone_2'].state === 'on' ? '1px solid rgba(255, 193, 7, 0.9)' : 'none'} !important;
+      }
+      .bubble-icon {
+        color: ${hass.states['switch.irritrol_lifedc_zone_2'].state === 'on' ? 'rgb(255, 193, 7)' : ''} !important;
+      }
+    tap_action:
+      action: call-service
+      service: button.press
+      target:
+        entity_id: button.irritrol_lifedc_run_zone_2
+    sub_button:
+      - entity: sensor.irritrol_lifedc_zone_2_progress
+        show_state: true
+        show_icon: false
+        show_name: false
+        visibility:
+          - condition: state
+            entity: switch.irritrol_lifedc_zone_2
+            state: "on"
+      - icon: mdi:play
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_run_zone_2
+      - icon: mdi:stop
+        tap_action:
+          action: call-service
+          service: switch.turn_off
+          target:
+            entity_id: switch.irritrol_lifedc_zone_2
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: number.irritrol_lifedc_zone_3_minutes
+    name: Zone 3
+    icon: mdi:sprinkler-variant
+    show_state: false
+    styles: |
+      .bubble-button-card-container {
+        background: ${hass.states['switch.irritrol_lifedc_zone_3'].state === 'on' ? 'rgba(255, 193, 7, 0.35)' : ''} !important;
+        border: ${hass.states['switch.irritrol_lifedc_zone_3'].state === 'on' ? '1px solid rgba(255, 193, 7, 0.9)' : 'none'} !important;
+      }
+      .bubble-icon {
+        color: ${hass.states['switch.irritrol_lifedc_zone_3'].state === 'on' ? 'rgb(255, 193, 7)' : ''} !important;
+      }
+    tap_action:
+      action: call-service
+      service: button.press
+      target:
+        entity_id: button.irritrol_lifedc_run_zone_3
+    sub_button:
+      - entity: sensor.irritrol_lifedc_zone_3_progress
+        show_state: true
+        show_icon: false
+        show_name: false
+        visibility:
+          - condition: state
+            entity: switch.irritrol_lifedc_zone_3
+            state: "on"
+      - icon: mdi:play
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_run_zone_3
+      - icon: mdi:stop
+        tap_action:
+          action: call-service
+          service: switch.turn_off
+          target:
+            entity_id: switch.irritrol_lifedc_zone_3
+  - type: custom:bubble-card
+    card_type: button
+    button_type: slider
+    entity: number.irritrol_lifedc_zone_4_minutes
+    name: Zone 4
+    icon: mdi:sprinkler-variant
+    show_state: false
+    styles: |
+      .bubble-button-card-container {
+        background: ${hass.states['switch.irritrol_lifedc_zone_4'].state === 'on' ? 'rgba(255, 193, 7, 0.35)' : ''} !important;
+        border: ${hass.states['switch.irritrol_lifedc_zone_4'].state === 'on' ? '1px solid rgba(255, 193, 7, 0.9)' : 'none'} !important;
+      }
+      .bubble-icon {
+        color: ${hass.states['switch.irritrol_lifedc_zone_4'].state === 'on' ? 'rgb(255, 193, 7)' : ''} !important;
+      }
+    tap_action:
+      action: call-service
+      service: button.press
+      target:
+        entity_id: button.irritrol_lifedc_run_zone_4
+    sub_button:
+      - entity: sensor.irritrol_lifedc_zone_4_progress
+        show_state: true
+        show_icon: false
+        show_name: false
+        visibility:
+          - condition: state
+            entity: switch.irritrol_lifedc_zone_4
+            state: "on"
+      - icon: mdi:play
+        tap_action:
+          action: call-service
+          service: button.press
+          target:
+            entity_id: button.irritrol_lifedc_run_zone_4
+      - icon: mdi:stop
+        tap_action:
+          action: call-service
+          service: switch.turn_off
+          target:
+            entity_id: switch.irritrol_lifedc_zone_4
+
+
+##############################################################################
+
+type: custom:vertical-stack-in-card
+cards:
+  - type: markdown
+    content: |
+      ## Irrigation Scheduler
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Zone 1
+        entities:
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Morning Program
+            entities:
+              - entity: input_boolean.irrigation_schedule_zone_1
+                name: Schedule Enabled
+              - entity: input_boolean.irrigation_zone_1_morning_enabled
+                name: Morning Enabled
+              - entity: input_datetime.irrigation_zone_1_morning_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_1_morning_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_1_morning_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Evening Program
+            entities:
+              - entity: input_boolean.irrigation_zone_1_evening_enabled
+                name: Evening Enabled
+              - entity: input_datetime.irrigation_zone_1_evening_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_1_evening_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_1_evening_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Days
+            entities:
+              - entity: input_boolean.irrigation_zone_1_monday
+                name: Monday
+              - entity: input_boolean.irrigation_zone_1_tuesday
+                name: Tuesday
+              - entity: input_boolean.irrigation_zone_1_wednesday
+                name: Wednesday
+              - entity: input_boolean.irrigation_zone_1_thursday
+                name: Thursday
+              - entity: input_boolean.irrigation_zone_1_friday
+                name: Friday
+              - entity: input_boolean.irrigation_zone_1_saturday
+                name: Saturday
+              - entity: input_boolean.irrigation_zone_1_sunday
+                name: Sunday
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Zone 2
+        entities:
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Morning Program
+            entities:
+              - entity: input_boolean.irrigation_schedule_zone_2
+                name: Schedule Enabled
+              - entity: input_boolean.irrigation_zone_2_morning_enabled
+                name: Morning Enabled
+              - entity: input_datetime.irrigation_zone_2_morning_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_2_morning_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_2_morning_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Evening Program
+            entities:
+              - entity: input_boolean.irrigation_zone_2_evening_enabled
+                name: Evening Enabled
+              - entity: input_datetime.irrigation_zone_2_evening_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_2_evening_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_2_evening_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Days
+            entities:
+              - entity: input_boolean.irrigation_zone_2_monday
+                name: Monday
+              - entity: input_boolean.irrigation_zone_2_tuesday
+                name: Tuesday
+              - entity: input_boolean.irrigation_zone_2_wednesday
+                name: Wednesday
+              - entity: input_boolean.irrigation_zone_2_thursday
+                name: Thursday
+              - entity: input_boolean.irrigation_zone_2_friday
+                name: Friday
+              - entity: input_boolean.irrigation_zone_2_saturday
+                name: Saturday
+              - entity: input_boolean.irrigation_zone_2_sunday
+                name: Sunday
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Zone 3
+        entities:
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Morning Program
+            entities:
+              - entity: input_boolean.irrigation_schedule_zone_3
+                name: Schedule Enabled
+              - entity: input_boolean.irrigation_zone_3_morning_enabled
+                name: Morning Enabled
+              - entity: input_datetime.irrigation_zone_3_morning_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_3_morning_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_3_morning_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Evening Program
+            entities:
+              - entity: input_boolean.irrigation_zone_3_evening_enabled
+                name: Evening Enabled
+              - entity: input_datetime.irrigation_zone_3_evening_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_3_evening_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_3_evening_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Days
+            entities:
+              - entity: input_boolean.irrigation_zone_3_monday
+                name: Monday
+              - entity: input_boolean.irrigation_zone_3_tuesday
+                name: Tuesday
+              - entity: input_boolean.irrigation_zone_3_wednesday
+                name: Wednesday
+              - entity: input_boolean.irrigation_zone_3_thursday
+                name: Thursday
+              - entity: input_boolean.irrigation_zone_3_friday
+                name: Friday
+              - entity: input_boolean.irrigation_zone_3_saturday
+                name: Saturday
+              - entity: input_boolean.irrigation_zone_3_sunday
+                name: Sunday
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Zone 4
+        entities:
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Morning Program
+            entities:
+              - entity: input_boolean.irrigation_schedule_zone_4
+                name: Schedule Enabled
+              - entity: input_boolean.irrigation_zone_4_morning_enabled
+                name: Morning Enabled
+              - entity: input_datetime.irrigation_zone_4_morning_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_4_morning_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_4_morning_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Evening Program
+            entities:
+              - entity: input_boolean.irrigation_zone_4_evening_enabled
+                name: Evening Enabled
+              - entity: input_datetime.irrigation_zone_4_evening_start
+                name: Start Time
+              - entity: input_number.irrigation_zone_4_evening_minutes
+                name: Minutes
+              - entity: input_number.irrigation_zone_4_evening_seconds
+                name: Seconds
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: Days
+            entities:
+              - entity: input_boolean.irrigation_zone_4_monday
+                name: Monday
+              - entity: input_boolean.irrigation_zone_4_tuesday
+                name: Tuesday
+              - entity: input_boolean.irrigation_zone_4_wednesday
+                name: Wednesday
+              - entity: input_boolean.irrigation_zone_4_thursday
+                name: Thursday
+              - entity: input_boolean.irrigation_zone_4_friday
+                name: Friday
+              - entity: input_boolean.irrigation_zone_4_saturday
+                name: Saturday
+              - entity: input_boolean.irrigation_zone_4_sunday
+                name: Sunday
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Global Protection
+        entities:
+          - entity: input_boolean.irrigation_weather_skip
+            name: Weather Skip
+          - type: custom:fold-entity-row
+            head:
+              entity: input_boolean.irrigation_vacation_mode
+              name: Vacation Mode
+            entities:
+              - entity: input_number.irrigation_vacation_runtime_percent
+                name: Reduce runtime to %
+
+
+##############################################################################
+
+
+
+type: custom:vertical-stack-in-card
+cards:
+  - type: markdown
+    content: |
+      ## Runtime & History
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Today Runtime
+        entities:
+          - entity: sensor.zone_1_irrigation_time_today
+            name: Zone 1 Today
+          - entity: sensor.zone_2_irrigation_time_today
+            name: Zone 2 Today
+          - entity: sensor.zone_3_irrigation_time_today
+            name: Zone 3 Today
+          - entity: sensor.zone_4_irrigation_time_today
+            name: Zone 4 Today
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Live Progress
+        entities:
+          - entity: sensor.irritrol_lifedc_cycle_progress
+            name: Cycle Progress
+          - entity: sensor.irritrol_lifedc_cycle_time_remaining
+            name: Cycle Remaining
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: Zone Progress
+        entities:
+          - entity: sensor.irritrol_lifedc_zone_1_progress
+            name: Zone 1 Progress
+          - entity: sensor.irritrol_lifedc_zone_1_time_remaining
+            name: Zone 1 Remaining
+          - entity: sensor.irritrol_lifedc_zone_2_progress
+            name: Zone 2 Progress
+          - entity: sensor.irritrol_lifedc_zone_2_time_remaining
+            name: Zone 2 Remaining
+          - entity: sensor.irritrol_lifedc_zone_3_progress
+            name: Zone 3 Progress
+          - entity: sensor.irritrol_lifedc_zone_3_time_remaining
+            name: Zone 3 Remaining
+          - entity: sensor.irritrol_lifedc_zone_4_progress
+            name: Zone 4 Progress
+          - entity: sensor.irritrol_lifedc_zone_4_time_remaining
+            name: Zone 4 Remaining
+  - type: history-graph
+    title: Irrigation Activity
+    hours_to_show: 24
+    refresh_interval: 30
+    entities:
+      - entity: switch.irritrol_lifedc_zone_1
+        name: Zone 1
+      - entity: switch.irritrol_lifedc_zone_2
+        name: Zone 2
+      - entity: switch.irritrol_lifedc_zone_3
+        name: Zone 3
+      - entity: switch.irritrol_lifedc_zone_4
+        name: Zone 4
+
+

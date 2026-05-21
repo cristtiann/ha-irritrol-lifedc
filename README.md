@@ -209,7 +209,7 @@ Files:
 Project screenshots and additional branding assets are included under:
 
 ```text
-docs/images/
+images/
 ```
 
 The original Bubble Card dashboard is included as:

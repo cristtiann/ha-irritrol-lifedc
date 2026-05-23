@@ -19,13 +19,14 @@ class SensorDescription:
     source_suffix: str
     native_unit_of_measurement: str | None = None
     device_class: SensorDeviceClass | None = None
+    state_class: SensorStateClass | None = None
 
 
 SENSORS = [
     SensorDescription("status", "Status", "irrigation_status"),
-    SensorDescription("lifedc_rssi", "LifeDC RSSI", "lifedc_rssi", "dBm", SensorDeviceClass.SIGNAL_STRENGTH),
-    SensorDescription("cycle_progress", "Cycle progress", "cycle_progress", "%"),
-    SensorDescription("cycle_time_remaining", "Cycle time remaining", "cycle_time_remaining", "s", SensorDeviceClass.DURATION),
+    SensorDescription("lifedc_rssi", "LifeDC RSSI", "lifedc_rssi", "dBm", SensorDeviceClass.SIGNAL_STRENGTH,SensorStateClass.MEASUREMENT,),
+    SensorDescription("cycle_progress", "Cycle progress", "cycle_progress", "%",SensorStateClass.MEASUREMENT,),
+    SensorDescription("cycle_time_remaining", "Cycle time remaining", "cycle_time_remaining", "s", SensorDeviceClass.DURATION,SensorStateClass.MEASUREMENT,),
 ]
 
 for zone in range(1, 5):

@@ -45,6 +45,7 @@ class IrritrolSensor(IrritrolEntity, SensorEntity):
         self._source_entity_id = f"sensor.{prefix}_{description.source_suffix}"
         self._attr_native_unit_of_measurement = description.native_unit_of_measurement
         self._attr_device_class = description.device_class
+        self._attr_state_class = description.state_class
 
         if description.native_unit_of_measurement == "%":
             self._attr_suggested_display_precision = 0

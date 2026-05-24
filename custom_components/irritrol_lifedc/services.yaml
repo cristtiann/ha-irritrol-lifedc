@@ -1,0 +1,37 @@
+start_cycle:
+  name: Start cycle
+  description: Start an irrigation cycle.
+  fields:
+    reverse:
+      name: Reverse
+      description: Run zones 4-3-2-1 instead of 1-2-3-4.
+      required: false
+      selector:
+        boolean:
+    repeat:
+      name: Repeat
+      description: Number of cycle repeats.
+      required: false
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 3
+          step: 1
+
+stop:
+  name: Stop
+  description: Stop irrigation.
+
+run_zone:
+  name: Run zone
+  description: Run a zone using configured duration.
+  fields:
+    zone:
+      name: Zone
+      required: true
+      selector:
+        number:
+          min: 1
+          max: 4
+          step: 1

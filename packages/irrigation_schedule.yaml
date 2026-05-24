@@ -1,0 +1,774 @@
+############################################################################
+#                     IRRIGATION SCHEDULE HELPERS
+############################################################################
+
+
+############################################################################
+#-->> INPUT_BOOLEAN
+input_boolean:
+  irritrol_stop_flash:
+    name: Irritrol Stop Flash
+
+  irrigation_weather_skip:
+    name: Irrigation Weather Skip
+  irrigation_vacation_mode:
+    name: Irrigation Vacation Mode
+
+  irrigation_schedule_zone_1:
+    name: Irrigation Schedule Zone 1
+  irrigation_schedule_zone_2:
+    name: Irrigation Schedule Zone 2
+  irrigation_schedule_zone_3:
+    name: Irrigation Schedule Zone 3
+  irrigation_schedule_zone_4:
+    name: Irrigation Schedule Zone 4
+
+  irrigation_zone_1_morning_enabled:
+    name: Zone 1 Morning Enabled
+  irrigation_zone_1_evening_enabled:
+    name: Zone 1 Evening Enabled
+  irrigation_zone_2_morning_enabled:
+    name: Zone 2 Morning Enabled
+  irrigation_zone_2_evening_enabled:
+    name: Zone 2 Evening Enabled
+  irrigation_zone_3_morning_enabled:
+    name: Zone 3 Morning Enabled
+  irrigation_zone_3_evening_enabled:
+    name: Zone 3 Evening Enabled
+  irrigation_zone_4_morning_enabled:
+    name: Zone 4 Morning Enabled
+  irrigation_zone_4_evening_enabled:
+    name: Zone 4 Evening Enabled
+
+  irrigation_zone_1_monday:
+    name: Zone 1 Monday
+  irrigation_zone_1_tuesday:
+    name: Zone 1 Tuesday
+  irrigation_zone_1_wednesday:
+    name: Zone 1 Wednesday
+  irrigation_zone_1_thursday:
+    name: Zone 1 Thursday
+  irrigation_zone_1_friday:
+    name: Zone 1 Friday
+  irrigation_zone_1_saturday:
+    name: Zone 1 Saturday
+  irrigation_zone_1_sunday:
+    name: Zone 1 Sunday
+
+  irrigation_zone_2_monday:
+    name: Zone 2 Monday
+  irrigation_zone_2_tuesday:
+    name: Zone 2 Tuesday
+  irrigation_zone_2_wednesday:
+    name: Zone 2 Wednesday
+  irrigation_zone_2_thursday:
+    name: Zone 2 Thursday
+  irrigation_zone_2_friday:
+    name: Zone 2 Friday
+  irrigation_zone_2_saturday:
+    name: Zone 2 Saturday
+  irrigation_zone_2_sunday:
+    name: Zone 2 Sunday
+
+  irrigation_zone_3_monday:
+    name: Zone 3 Monday
+  irrigation_zone_3_tuesday:
+    name: Zone 3 Tuesday
+  irrigation_zone_3_wednesday:
+    name: Zone 3 Wednesday
+  irrigation_zone_3_thursday:
+    name: Zone 3 Thursday
+  irrigation_zone_3_friday:
+    name: Zone 3 Friday
+  irrigation_zone_3_saturday:
+    name: Zone 3 Saturday
+  irrigation_zone_3_sunday:
+    name: Zone 3 Sunday
+
+  irrigation_zone_4_monday:
+    name: Zone 4 Monday
+  irrigation_zone_4_tuesday:
+    name: Zone 4 Tuesday
+  irrigation_zone_4_wednesday:
+    name: Zone 4 Wednesday
+  irrigation_zone_4_thursday:
+    name: Zone 4 Thursday
+  irrigation_zone_4_friday:
+    name: Zone 4 Friday
+  irrigation_zone_4_saturday:
+    name: Zone 4 Saturday
+  irrigation_zone_4_sunday:
+    name: Zone 4 Sunday
+
+#-->> INPUT_DATETIME
+input_datetime:
+  irrigation_zone_1_morning_start:
+    name: Zone 1 Morning Start
+    has_date: false
+    has_time: true
+  irrigation_zone_1_evening_start:
+    name: Zone 1 Evening Start
+    has_date: false
+    has_time: true
+
+  irrigation_zone_2_morning_start:
+    name: Zone 2 Morning Start
+    has_date: false
+    has_time: true
+  irrigation_zone_2_evening_start:
+    name: Zone 2 Evening Start
+    has_date: false
+    has_time: true
+
+  irrigation_zone_3_morning_start:
+    name: Zone 3 Morning Start
+    has_date: false
+    has_time: true
+  irrigation_zone_3_evening_start:
+    name: Zone 3 Evening Start
+    has_date: false
+    has_time: true
+
+  irrigation_zone_4_morning_start:
+    name: Zone 4 Morning Start
+    has_date: false
+    has_time: true
+  irrigation_zone_4_evening_start:
+    name: Zone 4 Evening Start
+    has_date: false
+    has_time: true
+
+
+############################################################################    
+#-->> INPUT_NUMBER
+input_number:
+  irrigation_zone_1_morning_minutes:
+    name: Zone 1 Morning Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_1_morning_seconds:
+    name: Zone 1 Morning Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+  irrigation_zone_1_evening_minutes:
+    name: Zone 1 Evening Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_1_evening_seconds:
+    name: Zone 1 Evening Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+
+  irrigation_zone_2_morning_minutes:
+    name: Zone 2 Morning Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_2_morning_seconds:
+    name: Zone 2 Morning Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+  irrigation_zone_2_evening_minutes:
+    name: Zone 2 Evening Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_2_evening_seconds:
+    name: Zone 2 Evening Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+
+  irrigation_zone_3_morning_minutes:
+    name: Zone 3 Morning Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_3_morning_seconds:
+    name: Zone 3 Morning Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+  irrigation_zone_3_evening_minutes:
+    name: Zone 3 Evening Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_3_evening_seconds:
+    name: Zone 3 Evening Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+
+  irrigation_zone_4_morning_minutes:
+    name: Zone 4 Morning Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_4_morning_seconds:
+    name: Zone 4 Morning Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+  irrigation_zone_4_evening_minutes:
+    name: Zone 4 Evening Minutes
+    min: 0
+    max: 25
+    step: 1
+    mode: box
+  irrigation_zone_4_evening_seconds:
+    name: Zone 4 Evening Seconds
+    min: 0
+    max: 59
+    step: 1
+    mode: box
+
+## For Vacation Mode
+  irrigation_vacation_runtime_percent:
+    name: Vacation Runtime Percent
+    min: 10
+    max: 100
+    step: 5
+    mode: box
+    initial: 10    
+
+############################################################################    
+#-->> AUTOMATIONS 
+
+######### irrigation_schedule_all_zones
+automation:
+  - id: irrigation_schedule_all_zones
+    alias: Irrigation Schedule All Zones
+    mode: single
+
+    triggers:
+      - trigger: time
+        at: input_datetime.irrigation_zone_1_morning_start
+        id: z1_morning
+      - trigger: time
+        at: input_datetime.irrigation_zone_1_evening_start
+        id: z1_evening
+      - trigger: time
+        at: input_datetime.irrigation_zone_2_morning_start
+        id: z2_morning
+      - trigger: time
+        at: input_datetime.irrigation_zone_2_evening_start
+        id: z2_evening
+      - trigger: time
+        at: input_datetime.irrigation_zone_3_morning_start
+        id: z3_morning
+      - trigger: time
+        at: input_datetime.irrigation_zone_3_evening_start
+        id: z3_evening
+      - trigger: time
+        at: input_datetime.irrigation_zone_4_morning_start
+        id: z4_morning
+      - trigger: time
+        at: input_datetime.irrigation_zone_4_evening_start
+        id: z4_evening
+
+    conditions:
+      - condition: state
+        entity_id: input_boolean.irrigation_weather_skip
+        state: "off"
+
+    actions:
+      - choose:
+          - conditions:
+              - condition: trigger
+                id: z1_morning
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_1
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_1_morning_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_1_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_1_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_1_morning_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_1_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_1_morning_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_1
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌱 Irrigation Morning"
+                  message: >
+                    Zone 1 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_1_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_1_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z1_evening
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_1
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_1_evening_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_1_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_1_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_1_evening_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_1_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_1_evening_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_1
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌙 Irrigation Evening"
+                  message: >
+                    Zone 1 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_1_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_1_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z2_morning
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_2
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_2_morning_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_2_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_2_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_2_morning_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_2_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_2_morning_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_2
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌱 Irrigation Morning"
+                  message: >
+                    Zone 2 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_2_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_2_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z2_evening
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_2
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_2_evening_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_2_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_2_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_2_evening_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_2_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_2_evening_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_2
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌙 Irrigation Evening"
+                  message: >
+                    Zone 2 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_2_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_2_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z3_morning
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_3
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_3_morning_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_3_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_3_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_3_morning_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_3_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_3_morning_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_3
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌱 Irrigation Morning"
+                  message: >
+                    Zone 3 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_3_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_3_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z3_evening
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_3
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_3_evening_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_3_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_3_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_3_evening_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_3_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_3_evening_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_3
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌙 Irrigation Evening"
+                  message: >
+                    Zone 3 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_3_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_3_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z4_morning
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_4
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_4_morning_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_4_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_4_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_4_morning_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_4_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_4_morning_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_4
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌱 Irrigation Morning"
+                  message: >
+                    Zone 4 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_4_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_4_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+          - conditions:
+              - condition: trigger
+                id: z4_evening
+              - condition: state
+                entity_id: input_boolean.irrigation_schedule_zone_4
+                state: "on"
+              - condition: state
+                entity_id: input_boolean.irrigation_zone_4_evening_enabled
+                state: "on"
+              - condition: template
+                value_template: >
+                  {% set days = {1: 'monday', 2: 'tuesday', 3: 'wednesday', 4: 'thursday', 5: 'friday', 6: 'saturday', 7: 'sunday'} %}
+                  {% set day = days[now().isoweekday()] %}
+                  {{ is_state('input_boolean.irrigation_zone_4_' ~ day, 'on') }}
+            sequence:
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_4_minutes
+                data:
+                  value: >-
+                    {% set runtime = states('input_number.irrigation_zone_4_evening_minutes') | float(0) %}
+                    {% set percent = states('input_number.irrigation_vacation_runtime_percent') | float(100) %}
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                      {{ (runtime * percent / 100) | round(0) }}
+                    {% else %}
+                      {{ runtime | round(0) }}
+                    {% endif %}
+              - action: number.set_value
+                target:
+                  entity_id: number.irritrol_lifedc_zone_4_seconds
+                data:
+                  value: "{{ states('input_number.irrigation_zone_4_evening_seconds') | int(0) }}"
+              - delay: "00:00:03"
+              - action: button.press
+                target:
+                  entity_id: button.irritrol_lifedc_run_zone_4
+              - action: notify.mobile_app_sm_s938b
+                data:
+                  title: "🌙 Irrigation Evening"
+                  message: >
+                    Zone 4 started. Weather OK.
+                    Runtime: {{ states('number.irritrol_lifedc_zone_4_minutes') }} min
+                    {{ states('number.irritrol_lifedc_zone_4_seconds') }} sec.
+                    {% if is_state('input_boolean.irrigation_vacation_mode', 'on') %}
+                    Vacation mode active: runtime reduced to {{ states('input_number.irrigation_vacation_runtime_percent') }}%.
+                    {% endif %}
+
+
+#########- irrigation_weather_skip_auto                  
+# for weather skip
+
+  - id: irrigation_weather_skip_auto
+    alias: Irrigation Weather Skip Auto
+    mode: single
+
+    triggers:
+      - trigger: time_pattern
+        minutes: "/30"
+
+      - trigger: homeassistant
+        event: start
+
+    actions:
+      - choose:
+          - conditions:
+              - condition: or
+                conditions:
+                  - condition: numeric_state
+                    entity_id: sensor.rain_next_12h
+                    above: 1
+
+                  - condition: numeric_state
+                    entity_id: sensor.rain_probability_next_12h
+                    above: 60
+
+                  - condition: numeric_state
+                    entity_id: sensor.temperature_avg_next_12h
+                    below: 8
+            sequence:
+              - action: input_boolean.turn_on
+                target:
+                  entity_id: input_boolean.irrigation_weather_skip
+
+        default:
+          - action: input_boolean.turn_off
+            target:
+              entity_id: input_boolean.irrigation_weather_skip
+
+
+#########- irrigation_cycle_finished                  
+
+  - id: irrigation_finished_notification
+    alias: Irrigation Finished Notification
+    mode: single
+
+    triggers:
+      - trigger: state
+        entity_id:
+          - switch.irritrol_lifedc_zone_1
+          - switch.irritrol_lifedc_zone_2
+          - switch.irritrol_lifedc_zone_3
+          - switch.irritrol_lifedc_zone_4
+        from: "on"
+        to: "off"
+
+    conditions:
+      - condition: template
+        value_template: >
+          {{
+            is_state('switch.irritrol_lifedc_zone_1', 'off') and
+            is_state('switch.irritrol_lifedc_zone_2', 'off') and
+            is_state('switch.irritrol_lifedc_zone_3', 'off') and
+            is_state('switch.irritrol_lifedc_zone_4', 'off')
+          }}
+
+    actions:
+      - action: notify.mobile_app_sm_s938b
+        data:
+          title: "✅ Irrigation Finished"
+          message: "All zones are now OFF."
+
+
+
+############################################################################                  
+#-->> SENSOR
+sensor:
+  - platform: history_stats
+    name: Zone 1 Irrigation Time Today
+    entity_id: switch.irritrol_lifedc_zone_1
+    state: "on"
+    type: time
+    start: "{{ today_at('00:00') }}"
+    end: "{{ now() }}"
+
+  - platform: history_stats
+    name: Zone 2 Irrigation Time Today
+    entity_id: switch.irritrol_lifedc_zone_2
+    state: "on"
+    type: time
+    start: "{{ today_at('00:00') }}"
+    end: "{{ now() }}"
+
+  - platform: history_stats
+    name: Zone 3 Irrigation Time Today
+    entity_id: switch.irritrol_lifedc_zone_3
+    state: "on"
+    type: time
+    start: "{{ today_at('00:00') }}"
+    end: "{{ now() }}"
+
+  - platform: history_stats
+    name: Zone 4 Irrigation Time Today
+    entity_id: switch.irritrol_lifedc_zone_4
+    state: "on"
+    type: time
+    start: "{{ today_at('00:00') }}"
+    end: "{{ now() }}"

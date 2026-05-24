@@ -1,0 +1,84 @@
+# packages/irrigation_weather.yaml
+
+input_number:
+  irrigation_rain_next_12h:
+    name: Irrigation Rain Next 12h
+    min: 0
+    max: 100
+    step: 0.1
+    unit_of_measurement: "mm"
+
+  irrigation_rain_probability_next_12h:
+    name: Irrigation Rain Probability Next 12h
+    min: 0
+    max: 100
+    step: 1
+    unit_of_measurement: "%"
+
+  irrigation_temperature_avg_next_12h:
+    name: Irrigation Temperature Avg Next 12h
+    min: -30
+    max: 60
+    step: 0.1
+    unit_of_measurement: "°C"
+
+automation:
+  - id: irrigation_update_weather_forecast_12h
+    alias: Irrigation Update Weather Forecast 12h
+    mode: single
+    trigger:
+      - platform: time_pattern
+        minutes: "/30"
+      - platform: homeassistant
+        event: start
+
+    action:
+      - service: weather.get_forecasts
+        target:
+          entity_id: weather.openweathermap
+        data:
+          type: hourly
+        response_variable: hourly
+
+      - variables:
+          forecast: "{{ hourly['weather.openweathermap']['forecast'] }}"
+          rain_12h: "{{ forecast[:4] | map(attribute='precipitation') | sum | round(1) }}"
+          rain_prob_12h: "{{ forecast[:4] | map(attribute='precipitation_probability') | max | default(0) | int }}"
+          temp_avg_12h: >-
+            {% set temps = forecast[:4] | map(attribute='temperature') | list %}
+            {{ (temps | average if temps | count > 0 else 0) | round(1) }}       
+
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.irrigation_rain_next_12h
+        data:
+          value: "{{ rain_12h }}"
+
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.irrigation_rain_probability_next_12h
+        data:
+          value: "{{ rain_prob_12h }}"
+
+      - service: input_number.set_value
+        target:
+          entity_id: input_number.irrigation_temperature_avg_next_12h
+        data:
+          value: "{{ temp_avg_12h }}"
+
+template:
+  - sensor:
+      - name: "Rain next 12h"
+        unique_id: rain_next_12h
+        unit_of_measurement: "mm"
+        state: "{{ states('input_number.irrigation_rain_next_12h') | float(0) }}"
+
+      - name: "Rain probability next 12h"
+        unique_id: rain_probability_next_12h
+        unit_of_measurement: "%"
+        state: "{{ states('input_number.irrigation_rain_probability_next_12h') | int(0) }}"
+
+      - name: "Temperature avg next 12h"
+        unique_id: temperature_avg_next_12h
+        unit_of_measurement: "°C"
+        state: "{{ states('input_number.irrigation_temperature_avg_next_12h') | float(0) }}"

@@ -1,0 +1,27 @@
+{
+  "domain": "irritrol_lifedc",
+  "name": "Irritrol LifeDC",
+  "codeowners": [
+    "@cristtiann"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "bluetooth"
+  ],
+  "documentation": "https://github.com/cristtiann/ha-irritrol-lifedc",
+  "issue_tracker": "https://github.com/cristtiann/ha-irritrol-lifedc/issues",
+  "iot_class": "local_push",
+  "integration_type": "device",
+  "requirements": [
+    "bleak-retry-connector>=3.10.0"
+  ],
+  "version": "0.2.0",
+  "bluetooth": [
+    {
+      "service_uuid": "aa1c0001-eb88-44d3-8e21-6d83f5e221af"
+    },
+    {
+      "local_name": "Life-DC*"
+    }
+  ]
+}

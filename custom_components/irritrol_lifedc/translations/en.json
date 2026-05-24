@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Irritrol LifeDC",
+        "description": "Select a discovered Irritrol LifeDC controller or enter its BLE MAC address manually. The controller usually appears as Life-DC-XXXXXXX. Use the entity prefix to control the generated entity IDs. Default: irritrol_lifedc.",
+        "data": {
+          "device": "Discovered LifeDC controller",
+          "address": "BLE MAC address",
+          "name": "Name",
+          "entity_prefix": "Entity prefix"
+        }
+      }
+    },
+    "error": {
+      "address_required": "BLE MAC address is required when using manual entry."
+    },
+    "abort": {
+      "already_configured": "This LifeDC controller is already configured.",
+      "not_supported": "This Bluetooth device is not an Irritrol LifeDC controller."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Irritrol LifeDC BLE protocol settings",
+        "description": "The default command profile is built for one tested Irritrol LifeDC 4-zone controller. If another controller or firmware uses a different profile, select Custom and adjust the command settings.",
+        "data": {
+          "protocol_profile": "Protocol profile",
+          "service_uuid": "BLE service UUID",
+          "write_uuid": "BLE write characteristic UUID",
+          "notify_uuid": "BLE notify characteristic UUID",
+          "ack_payload": "ACK payload",
+          "stop_payload": "Stop / valve off payload",
+          "zone_1_payload": "Zone 1 ON payload",
+          "zone_2_payload": "Zone 2 ON payload",
+          "zone_3_payload": "Zone 3 ON payload",
+          "zone_4_payload": "Zone 4 ON payload",
+          "ack_delay": "ACK delay seconds"
+        }
+      }
+    },
+    "error": {
+      "invalid_hex_payload": "Invalid hex payload. Use byte values such as: 31 05 12 01 00 00 B4"
+    }
+  }
+}

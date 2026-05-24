@@ -1,0 +1,18 @@
+type: entities
+title: Irritrol LifeDC
+entities:
+  - sensor.irritrol_lifedc_status
+  - sensor.irritrol_lifedc_active_zone
+  - binary_sensor.irritrol_lifedc_connected
+  - sensor.irritrol_lifedc_cycle_progress
+  - sensor.irritrol_lifedc_cycle_time_remaining
+  - button.irritrol_lifedc_start_cycle_1_2_3_4
+  - button.irritrol_lifedc_start_cycle_4_3_2_1
+  - button.irritrol_lifedc_stop
+  - button.irritrol_lifedc_run_zone_1
+  - button.irritrol_lifedc_run_zone_2
+  - button.irritrol_lifedc_run_zone_3
+  - button.irritrol_lifedc_run_zone_4
+  - number.irritrol_lifedc_zone_1_minutes
+  - number.irritrol_lifedc_zone_1_seconds
+  - number.irritrol_lifedc_inter_zone_delay
